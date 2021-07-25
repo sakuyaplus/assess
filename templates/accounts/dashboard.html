@@ -44,7 +44,6 @@
                       {% endfor %}
                       </ul>
                 </div>
-                
               </div>
           <br></br>
 
@@ -62,6 +61,30 @@
                       <div class="right-content">
                         <h4>对<a href="{%url 'courselisting' comment.course_id %}"> {{comment.course_name}}</a> 的评论  <span>发表于{{comment.comment_date}}</span></h4>
                         <p>{{comment.stars}}⭐ {{comment.message}}</p>
+                      </div>
+                    </li>
+                    
+                      {% endfor %}
+                      </ul>
+                  </div>
+                </div>
+
+             <br></br>
+
+          <h3>留言板</h3>
+               <br></br>
+             <div class="sidebar-item comments">
+                <div class="sidebar-heading">
+                    <h4>{{discussioncounts}} 条留言</h4>
+                </div>
+                <div class="content">
+                    <ul>
+                      {% for comment in discussions%}
+                      <br></br>
+                    <li>
+                      <div class="right-content">
+                        <h4><span>发表于{{comment.comment_date}}</span></h4>
+                        <p>{{comment.message}}</p>
                       </div>
                     </li>
                     

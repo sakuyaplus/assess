@@ -40,3 +40,16 @@ def tcomment(request):
      
         return redirect('/teachers/'+teacher_id)
     return redirect('index')
+
+def deltcomment(request):
+    if request.method == 'POST':
+        user_id=request.POST['user_id']
+        teacher_id=request.POST['teacher_id']
+        print(user_id,teacher_id)
+        todelete = TComment.objects.filter(user_id=user_id,teacher_id=teacher_id)
+        if todelete:
+            todelete.delete()
+            messages.success(request,'删除成功')
+        else:
+            messages.error(request,'删除失败')
+    return redirect('/teachers/'+teacher_id)

@@ -3,6 +3,7 @@ from django.contrib.auth.models import User,auth
 from django.contrib import messages
 from tcomments.models import TComment
 from ccomments.models import CComment
+from discussions.models import Discussion
 # Create your views here.
 def register(request):
     
@@ -71,11 +72,17 @@ def dashboard(request):
         user_id=request.user.id
     )
     ccommentcounts = len(ccomments)
+    discussions = Discussion.objects.order_by('-comment_date').filter(
+        user_id=request.user.id
+    )
+    discussioncounts = len(discussions)
     context = {
         'tcomments': tcomments,
         'tcommentcounts': tcommentcounts,
         'ccomments': ccomments,
         'ccommentcounts': ccommentcounts,
+        'discussions': discussions,
+        'discussioncounts': discussioncounts,
     }
 
 

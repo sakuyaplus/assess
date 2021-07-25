@@ -57,7 +57,20 @@
                         {% for comment in comments%}
                         <li>
                           <div class="right-content">
-                            <h4>{{comment.user_name}}  {{comment.stars}}⭐<span>{{comment.comment_date}}</span></h4>
+                            <h4>{{comment.user_name}}  {{comment.stars}}⭐<span>{{comment.comment_date}}
+                            
+                            {% if user.id == comment.user_id%}
+
+                            <a id="h-submitBtn" onclick="document.getElementById('delccomment').submit();">删除</a>
+                            <form id="delccomment" action="{% url 'delccomment' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="user_id" value="{{user.id}}"></input>
+                            <input type="hidden" name="course_id" value="{{listing.id}}"></input>
+                            </form>
+
+                            {% endif %}
+                            </span>
+                            </h4>
                             <p>{{comment.message}}</p>
                           </div>
                         </li>
