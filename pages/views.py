@@ -15,24 +15,35 @@ def index(request):
     for i in range(teacherlen):
         ids.append(tavgscore[i]['teacher_id'])
         tstars.append(tavgscore[i]['avgstars'])
-    bestteachers = Teacher.objects.filter(id__in=ids)
    
+    Tres=[]
+    for i in range(teacherlen):
+        res_one = Teacher.objects.get(id=ids[i])
+        Tres.append(res_one)
+  
  
     cavgscore=CComment.objects.values('course_name','course_id').annotate(avgstars=Avg('stars')).order_by('-avgstars')[:4]
     courselen=len(cavgscore)
     ids=[]
     cstars=[]
-    for i in range(4):
+   
+    for i in range(courselen):
         ids.append(cavgscore[i]['course_id'])
         cstars.append(cavgscore[i]['avgstars'])
-    bestcourses = Course.objects.filter(id__in=ids)
+
+    Cres=[]
+    for i in range(courselen):
+        res_one = Course.objects.get(id=ids[i])
+        Cres.append(res_one)
+    print(Cres)
+    
 
     latesttcomments=TComment.objects.order_by('-comment_date')[:3]
     latestccomments=CComment.objects.order_by('-comment_date')[:3]
 
     context={
-        'bestteachers': zip(bestteachers,tstars),
-        'bestcourses': zip(bestcourses,cstars),
+        'bestteachers': zip(Tres,tstars),
+        'bestcourses': zip(Cres,cstars),
         'latesttcomments': latesttcomments,
         'latestccomments': latestccomments,
     }
