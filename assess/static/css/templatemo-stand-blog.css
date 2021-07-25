@@ -295,7 +295,7 @@ header .navbar {
 .owl-banner .item .item-content h4 {
 	font-size: 24px;
 	font-weight: 900;
-	color: #fff;
+	color: #000;
 	letter-spacing: 0.5px;
 	text-transform: capitalize;
 	margin: 10px 0px 12px 0px;
@@ -308,7 +308,7 @@ header .navbar {
 
 .owl-banner .item .item-content ul li:after {
 	content: '|';
-	color: #fff;
+	color: #000;
 	margin-left: 8px;
 }
 
@@ -318,7 +318,7 @@ header .navbar {
 
 .owl-banner .item .item-content ul li a {
 	font-size: 14px;
-	color: #fff;
+	color: #000;
 	font-weight: 500;
 	transition: all .3s;
 }
