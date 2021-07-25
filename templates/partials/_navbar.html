@@ -30,7 +30,7 @@
                              {% if 'discuss' in request.path %}
                                 class="active"
                             {%endif%}
-                            ><a href="#">讨论区</a></li>
+                            ><a href="#">留言板</a></li>
 
                             <li
                              {% if 'about' in request.path %}
@@ -39,18 +39,7 @@
                             ><a href="{%url 'about'%}">关于</a></li>
                             
                         </ul>
-                        <ul class="nav navbar-nav">
-                            <li>
-                                <form action="" class="navbar-form">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <input type="search" name="search" id="" placeholder="搜索" class="form-control">
-                                            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-                                        </div>
-                                    </div>
-                                </form>
-                            </li>
-                        </ul>
+                        
                         {%if user.is_authenticated%}
                             <ul class="nav navbar-nav navbar-right">
                             <li><a href="#">欢迎，{{user.username}}</a></li>

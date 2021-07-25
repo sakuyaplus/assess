@@ -18,51 +18,26 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="blog-post">
-                    <div class="blog-thumb">
-                      <img class="listing" src="{{listing.photo.url}}" alt="">
-                    </div>
+                   
                     <div class="down-content">
-                      <span>{{listing.rank}}</span>
-                      <a href="post-details.html"><h4>{{listing.name}}</h4></a>
+                      
+                      <a href="#"><h4>{{listing.name}}</h4></a>
+                      <span>{{listing.teacher.name}} {{listing.typeofcourse}} {{listing.credits}}学分 </span>
                       <ul class="post-info">
-                        <li>{{listing.dept}}</li>
-                        <li>{{listing.organs}}</li>
-                        <li>{{listing.sex}}</li>
+                            <li>{{listing.coursetime}}</li>
+                            <li>{{listing.courseacademy}}</li>
                       </ul>
+                      <br></br>
+                      <h4><a href={% url 'teacherlisting' listing.teacher.id %}>教师详细信息</a></h4>
+                      <br></br>
+                      <h4>上课地点</h4>
+                      <p>{{listing.campus}}</p>
+                      <br></br>
+                      <h4>课程简介</h4>
+                      <p>{{listing.description}}</p>
+                      
+                      
 
-                      <h4>联系方式</h4>
-                      <p>
-                      邮箱：{{listing.email}}
-                      <br>
-                      {% if listing.contact%}
-                      其他联系方式：{{listing.contact}}
-                      {% endif %}     
-                      </p>
-
-                      {% if listing.studyexp%}
-                      <h4>学习经历</h4>
-                      <p>{{listing.studyexp}}</p>
-                      {% endif %}
-
-                      {% if listing.researchfield%}
-                      <h4>研究领域</h4>
-                      <p>{{listing.researchfield}}</p>
-                      {% endif %}
-
-                      {% if listing.papers%}
-                      <h4>发表论文</h4>
-                      <p>{{listing.papers}}</p>
-                      {% endif %}
-
-                      {% if listing.tasks%}
-                      <h4>承担课题</h4>
-                      <p>{{listing.tasks}}</p>
-                      {% endif %}
-
-                      {% if listing.honors%}
-                      <h4>荣誉奖励</h4>
-                      <p>{{listing.honors}}</p>
-                      {% endif %}
 
                       <div class="post-options">
                         
@@ -102,12 +77,12 @@
                         
 
                         <div class="content">
-                        <form id="comment" action="{% url 'tcomment' %}" method="post">
+                        <form id="comment" action="{% url 'ccomment' %}" method="post">
                         {% csrf_token %}
                             <input type="hidden" name="user_id" value="{{user.id}}">
                             <input type="hidden" name="user_name" value="{{user.username}}">
-                            <input type="hidden" name="teacher_id" value="{{listing.id}}">
-                            <input type="hidden" name="teacher_name" value="{{listing.name}}">
+                            <input type="hidden" name="course_id" value="{{listing.id}}">
+                            <input type="hidden" name="course_name" value="{{listing.name}}">
                             <div class="row">
                             <h4 style="margin-left: 25px;">满意度</h4>
                             <div class="rating">

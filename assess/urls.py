@@ -18,6 +18,7 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
+    path("ccomments/",include('ccomments.urls')),
     path("tcomments/",include('tcomments.urls')),
     path("teachers/",include('teachers.urls')),
     path("courses/",include('courses.urls')),

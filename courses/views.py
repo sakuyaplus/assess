@@ -1,4 +1,4 @@
-from tcomments.models import TComment
+from ccomments.models import CComment
 from django.shortcuts import get_object_or_404, render
 from django.core.paginator import EmptyPage, Paginator, PageNotAnInteger
 from django.db.models import Q,Avg
@@ -30,23 +30,15 @@ def index(request):
 
         if credits !='':
             listings = listings.filter(
-                credits__icontains=credits
+                credits__iexact=credits
             )   
     
-    if 'type' in request.GET: #选择类型
-        type=request.GET['type']
-
-        if type !='全部':
+    if 'teacher' in request.GET: #选择教师
+        teacher=request.GET['teacher']
+        print(teacher)
+        if teacher !='':
             listings = listings.filter(
-                typeofcourse__icontains=type
-            )   
-    
-    if 'campus' in request.GET: #选择校区
-        campus=request.GET['campus']
-
-        if type !='全部':
-            listings = listings.filter(
-                campus__icontains=campus
+                teacher__name__iexact=teacher
             )   
 
     paginator=Paginator(listings,12)
@@ -63,26 +55,29 @@ def index(request):
 
 
 def listing(request, listing_id):
-    '''
-    listing = get_object_or_404(Teacher, pk=listing_id)
-    comments = TComment.objects.order_by('-comment_date').filter(
-        teacher_id=listing_id
+    
+    listing = get_object_or_404(Course, pk=listing_id)
+    
+    comments = CComment.objects.order_by('-comment_date').filter(
+        course_id=listing_id
     )
-    avgscore=TComment.objects.filter(teacher_id=listing_id).aggregate(Avg("stars"))['stars__avg']
+    
+    avgscore=CComment.objects.filter(course_id=listing_id).aggregate(Avg("stars"))['stars__avg']
+    
     if avgscore==None:
         avgscore=0
+        
     commentcounts = len(comments)
+    
     context = {
         'listing': listing,
         'comments': comments,
         'commentcounts': commentcounts,
         'avgscore': avgscore,
     }
-'''
-    context={
 
-    }
-    return render(request, 'teachers/listing.html', context)
+    
+    return render(request, 'courses/listing.html', context)
 
 def search(request):
 
