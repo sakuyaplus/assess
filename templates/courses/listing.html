@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% block title %}
+ | {{listing.name}}
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_alerts.html' %}
+   <section class="blog-posts grid-system">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="all-blog-posts">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="blog-post">
+                    <div class="blog-thumb">
+                      <img class="listing" src="{{listing.photo.url}}" alt="">
+                    </div>
+                    <div class="down-content">
+                      <span>{{listing.rank}}</span>
+                      <a href="post-details.html"><h4>{{listing.name}}</h4></a>
+                      <ul class="post-info">
+                        <li>{{listing.dept}}</li>
+                        <li>{{listing.organs}}</li>
+                        <li>{{listing.sex}}</li>
+                      </ul>
+
+                      <h4>联系方式</h4>
+                      <p>
+                      邮箱：{{listing.email}}
+                      <br>
+                      {% if listing.contact%}
+                      其他联系方式：{{listing.contact}}
+                      {% endif %}     
+                      </p>
+
+                      {% if listing.studyexp%}
+                      <h4>学习经历</h4>
+                      <p>{{listing.studyexp}}</p>
+                      {% endif %}
+
+                      {% if listing.researchfield%}
+                      <h4>研究领域</h4>
+                      <p>{{listing.researchfield}}</p>
+                      {% endif %}
+
+                      {% if listing.papers%}
+                      <h4>发表论文</h4>
+                      <p>{{listing.papers}}</p>
+                      {% endif %}
+
+                      {% if listing.tasks%}
+                      <h4>承担课题</h4>
+                      <p>{{listing.tasks}}</p>
+                      {% endif %}
+
+                      {% if listing.honors%}
+                      <h4>荣誉奖励</h4>
+                      <p>{{listing.honors}}</p>
+                      {% endif %}
+
+                      <div class="post-options">
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="col-lg-12">
+                  <div class="sidebar-item comments">
+                    <div class="sidebar-heading">
+                      <h2>{{commentcounts}} 条评价  {{avgscore|floatformat:2}}⭐</h2>
+                    </div>
+                    <div class="content">
+                      <ul>
+                        {% for comment in comments%}
+                        <li>
+                          <div class="right-content">
+                            <h4>{{comment.user_name}}  {{comment.stars}}⭐<span>{{comment.comment_date}}</span></h4>
+                            <p>{{comment.message}}</p>
+                          </div>
+                        </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-12">
+                  <div class="sidebar-item submit-comment">
+                    <div class="sidebar-heading">
+                      <h2>评价</h2>
+                    </div>
+
+                    {% if user.is_authenticated %}
+                        
+
+                        <div class="content">
+                        <form id="comment" action="{% url 'tcomment' %}" method="post">
+                        {% csrf_token %}
+                            <input type="hidden" name="user_id" value="{{user.id}}">
+                            <input type="hidden" name="user_name" value="{{user.username}}">
+                            <input type="hidden" name="teacher_id" value="{{listing.id}}">
+                            <input type="hidden" name="teacher_name" value="{{listing.name}}">
+                            <div class="row">
+                            <h4 style="margin-left: 25px;">满意度</h4>
+                            <div class="rating">
+                                <input type="radio" id="star5" name="rating" value="5" /><label for="star5"></label>
+                                <input type="radio" id="star4" name="rating" value="4" /><label for="star4"></label>
+                                <input type="radio" id="star3" name="rating" value="3" /><label for="star3"></label>
+                                <input type="radio" id="star2" name="rating" value="2" /><label for="star2"></label>
+                                <input type="radio" id="star1" name="rating" value="1" /><label for="star1"></label>
+                            </div>
+                                
+              
+                            <div class="col-lg-12">
+                                <fieldset>
+                                <textarea name="message" rows="6" id="message" placeholder="输入评论" required=""></textarea>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <fieldset>
+                                <button type="submit" id="form-submit" class="main-button">Submit</button>
+                                </fieldset>
+                            </div>
+                            </div>
+                        </form>
+                        </div>
+                    {% else %}
+                        <h3>您需要登录后才能发表评价</h3> 
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+    
+
+
+
+{% endblock %}
