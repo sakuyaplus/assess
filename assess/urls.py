@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("ccomments/",include('ccomments.urls')),
     path("tcomments/",include('tcomments.urls')),
+    path("discussions/",include('discussions.urls')),
     path("teachers/",include('teachers.urls')),
     path("courses/",include('courses.urls')),
     path("accounts/",include('accounts.urls')),

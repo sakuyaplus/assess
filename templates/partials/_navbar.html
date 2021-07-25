@@ -30,7 +30,7 @@
                              {% if 'discuss' in request.path %}
                                 class="active"
                             {%endif%}
-                            ><a href="#">留言板</a></li>
+                            ><a href="{%url 'discussions'%}">留言板</a></li>
 
                             <li
                              {% if 'about' in request.path %}

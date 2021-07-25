@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% block title %}
+ | 留言板
+{% endblock %}
+
+
+{% block content %}
+
+  <!-- Banner Starts Here -->
+   <section class="call-to-action">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="main-content" background>
+              <div class="row">
+                
+                  <font color="white">
+                  <h1 style="text-align:center">留言板</h1>
+                  </font>
+                
+               
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Banner Ends Here -->
+
+    {% include 'partials/_alerts.html' %}
+
+
+    <section class="blog-posts grid-system">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="all-blog-posts">
+              <div class="row">
+                {% for listing in listings%}
+
+                
+                    <div class="col-lg-6">
+                    <div class="blog-post">
+                        
+                        <div class="down-content">
+                        <span>#{{listing.id}}</span>
+                        <h4>{{listing.user_name}}</h4>
+                        
+                        <ul class="post-info">
+                            <form id="comment" action="{% url 'delcomment' %}" method="post">
+                            {%csrf_token%}
+                            <input type="hidden" name="discuss_id" value="{{listing.id}}" >
+                            <li>发表于{{listing.comment_date}}</li>
+                            {% if listing.user_id == user.id %}
+                            <li><a id="h-submitBtn" onclick="document.getElementById('comment').submit();">删除</a></li>
+                            {% endif %}
+                            </form>
+                        </ul>
+                        <p class="abstract">{{listing.message}}</p>
+                       
+                        </div>
+                    </div>
+                    </div>
+                {%endfor%}
+             
+
+                <div class="col-lg-12">
+                  <ul class="page-numbers">
+
+                   {% if listings.has_other_pages %}
+                    
+                    {%if listings.has_previous%}
+                        <li class="page-item">
+                        <a href="?page={{ listings.previous_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&{{ key }}={{ value }}{% endifnotequal %}{% endfor %}">&laquo;</a>
+
+                        </li>
+                    {%else%}
+                        <li class="page-item disabled">
+                        <a>&laquo;</a>
+                        </li>
+                    {%endif%}
+
+                    {% for i in listings.paginator.page_range %}
+                        {% if listings.number == i %}
+                        <li class="page-item active">
+                        <a>{{ i }}</a>
+                        </li>
+                        {% else %}
+                        <li>
+                        
+                        <a href="?page={{i }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&{{ key }}={{ value }}{% endifnotequal %}{% endfor %}">{{i}}</a>
+                        </li>
+                        {%endif%}
+                    {%endfor%}
+
+                    {%if listings.has_next%}
+                        <li>
+                        <a href="?page={{ listings.next_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&{{ key }}={{ value }}{% endifnotequal %}{% endfor %}">&raquo;</a>
+                        </li>
+                    {%else%}
+                        <li class="disabled">
+                        <a>&raquo;</a>
+                        </li>
+                    {%endif%}
+
+            </ul>
+          {% endif %}
+                    
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="sidebar">
+              
+              <div class="row">
+
+                  <div class="modal fade" id="inquiryModal" role="dialog">
+    
+     
+          <h5 class="modal-title" id="inquiryModalLabel">Make An Inquiry</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'dcomment' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="user_id" value="{{user.id}}">
+            <input type="hidden" name="user_name" value="{{user.username}}">
+            <div class="form-group">
+              <h4 for="message" class="col-form-label">留言:</h4>
+              <br></br>
+               {% if not user.is_authenticated%}
+               <label for="message" class="col-form-label">你需要登陆后才能发表留言</label>
+               {%else%}
+              <textarea name="message" class="form-control" rows="15"></textarea>
+              <br></br>
+              <input type="submit" value="发表留言" class="btn btn-block btn-secondary">
+              {% endif %}
+              
+            </div>
+           
+            
+          
+       
+    
+     </div>
+
+             
+
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+{% endblock %}
+
