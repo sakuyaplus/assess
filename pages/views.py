@@ -35,7 +35,7 @@ def index(request):
     for i in range(courselen):
         res_one = Course.objects.get(id=ids[i])
         Cres.append(res_one)
-    print(Cres)
+    
     
 
     latesttcomments=TComment.objects.order_by('-comment_date')[:3]
